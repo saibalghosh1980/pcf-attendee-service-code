@@ -1,5 +1,6 @@
 package io.pivotal;
 
+
 import io.pivotal.enablement.attendee.model.Attendee;
 import io.restassured.RestAssured;
 import org.junit.Before;
