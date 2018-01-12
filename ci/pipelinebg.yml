@@ -1,0 +1,50 @@
+---
+resources:
+- name: attendee-service-source
+  type: git
+  source:
+    uri: https://github.com/saibalghosh1980/pcf-attendee-service-code.git  #<---- REPLACE ME
+    branch: master
+
+- name: deploy-attendee-service
+  type: cf
+  source:
+    api: api.system.cumuluslabs.io        #<----- REPLACE ME
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: snatarajan2-PAL-JAN8    #<----- REPLACE ME
+    space: dev         #<----- REPLACE ME
+    skip_cert_check: true
+
+jobs:
+- name: test
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+  - task: test
+    file: attendee-service-source/ci/tasks/test.yml
+
+- name: deploy-green
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [test]
+  - task: package
+    file: attendee-service-source/ci/tasks/package.yml
+  - put: deploy-attendee-service
+    params:
+      manifest: attendee-service-source/manifestgreen.yml
+      path: package-output/attendee-service.jar
+
+- name: smoke_test
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [deploy-green]
+  - task: smoke_test
+    file: attendee-service-source/ci/tasks/smoke-test.yml
+    params:
+      ATTENDEE_SERVICE_URL: https://attendee-cutcha-godson-green.apps.cumuluslabs.io  #<---- REPLACE ME
