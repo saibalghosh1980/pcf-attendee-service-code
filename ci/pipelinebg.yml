@@ -55,6 +55,8 @@ jobs:
   - get: attendee-service-source
     trigger: true
     passed: [smoke_test_green]
+  - task: package
+    file: attendee-service-source/ci/tasks/package.yml
   - put: deploy-attendee-service
     params:
       manifest: attendee-service-source/manifestgreenrc.yml
