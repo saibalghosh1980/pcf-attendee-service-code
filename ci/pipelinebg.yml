@@ -60,3 +60,4 @@ jobs:
   - put: deploy-attendee-service
     params:
       manifest: attendee-service-source/manifestgreenrc.yml
+      path: package-output/attendee-service.jar
