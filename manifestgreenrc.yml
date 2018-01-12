@@ -1,0 +1,10 @@
+applications:
+- name: attendee-green
+  path: target/attendee-1.0.jar
+  #random-route: true
+  host: attendee-cutcha-godson
+  memory: 768M
+  instances: 1
+  buildpack: java_buildpack_offline
+  services:
+  - attendee-mysql

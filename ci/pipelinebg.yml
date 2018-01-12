@@ -38,7 +38,7 @@ jobs:
       manifest: attendee-service-source/manifestgreen.yml
       path: package-output/attendee-service.jar
 
-- name: smoke_test
+- name: smoke_test_green
   public: true
   plan:
   - get: attendee-service-source
@@ -48,3 +48,13 @@ jobs:
     file: attendee-service-source/ci/tasks/smoke-test.yml
     params:
       ATTENDEE_SERVICE_URL: https://attendee-cutcha-godson-green.apps.cumuluslabs.io  #<---- REPLACE ME
+
+- name: change-green-route
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [smoke_test_green]
+  - put: deploy-attendee-service
+    params:
+      manifest: attendee-service-source/manifestgreenrc.yml
