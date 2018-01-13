@@ -21,3 +21,4 @@ cf restart attendee
 cf routes
 echo "GREEN TURNED TO BLUE"
 echo "--------------------------------------------------------------------------"
+

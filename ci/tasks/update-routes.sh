@@ -21,3 +21,4 @@ cf map-route attendee-green apps.cumuluslabs.io --hostname attendee-cutcha-godso
 cf routes
 echo "Routes updated"
 echo "--------------------------------------------------------------------------"
+
