@@ -74,7 +74,7 @@ jobs:
     file: attendee-service-source/ci/tasks/smoke-test.yml
     params:
       ATTENDEE_SERVICE_URL: https://attendee-cutcha-godson.apps.cumuluslabs.io  #<---- REPLACE ME
-- name: cdelete-old-app
+- name: delete-old-app
   public: true
   plan:
   - get: attendee-service-source

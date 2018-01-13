@@ -15,9 +15,10 @@ cf routes
 
 echo "--------------------------------------------------------------------------"
 echo "DELETE OLD APP"
-cf delete attendee
+cf delete -f attendee
 cf rename attendee-green attendee
 cf restart attendee
+cf delete-route -f  apps.cumuluslabs.io -n attendee-cutcha-godson-green
 cf routes
 echo "GREEN TURNED TO BLUE"
 echo "--------------------------------------------------------------------------"
