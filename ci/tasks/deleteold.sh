@@ -13,11 +13,11 @@ cf apps
 
 cf routes
 
-
-
 echo "--------------------------------------------------------------------------"
-echo "CHANGING ROUTE"
-cf map-route attendee-green apps.cumuluslabs.io --hostname attendee-cutcha-godson
+echo "DELETE OLD APP"
+cf delete attendee
+cf rename attendee-green attendee
+cf restart attendee
 cf routes
-echo "Routes updated"
+echo "GREEN TURNED TO BLUE"
 echo "--------------------------------------------------------------------------"

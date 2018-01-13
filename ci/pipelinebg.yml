@@ -64,3 +64,27 @@ jobs:
           PWS_USER: {{cf-user}}
           PWS_PWD: {{cf-password}}
           PWS_SPACE: dev
+- name: smoke_test_green_with_new_route
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [change-green-route]
+  - task: smoke_test
+    file: attendee-service-source/ci/tasks/smoke-test.yml
+    params:
+      ATTENDEE_SERVICE_URL: https://attendee-cutcha-godson.apps.cumuluslabs.io  #<---- REPLACE ME
+- name: cdelete-old-app
+  public: true
+  plan:
+  - get: attendee-service-source
+    trigger: true
+    passed: [smoke_test_green_with_new_route]
+  - task: switch-green-route
+    file: attendee-service-source/ci/tasks/deleteold.yml
+    params:
+          PWS_API: api.system.cumuluslabs.io
+          PWS_ORG: snatarajan2-PAL-JAN8
+          PWS_USER: {{cf-user}}
+          PWS_PWD: {{cf-password}}
+          PWS_SPACE: dev
