@@ -32,7 +32,7 @@ jobs:
   - get: attendee-service-source
     trigger: true
   - task: test
-    file: pcf-attendee-service-code/ci/tasks/test.yml
+    file: attendee-service-source/ci/tasks/test.yml
 
 - name: deploy-green
   public: true
