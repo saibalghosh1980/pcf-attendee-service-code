@@ -15,6 +15,15 @@ resources:
     organization: snatarajan2-PAL-JAN8    #<----- REPLACE ME
     space: dev         #<----- REPLACE ME
     skip_cert_check: true
+- name: cli
+  type: cf-cli
+  source:
+    api: api.system.cumuluslabs.io
+    username: {{cf-user}}
+    password: {{cf-password}}
+    org: snatarajan2-PAL-JAN8
+    space: dev
+    skip_cert_check: true
 
 jobs:
 - name: test
@@ -57,7 +66,8 @@ jobs:
     passed: [smoke_test_green]
   - task: package
     file: attendee-service-source/ci/tasks/package.yml
-  - put: deploy-attendee-service
+  - put: cf-map-route
+    resource: cli
     params:
-      manifest: attendee-service-source/manifestgreenrc.yml
-      path: package-output/attendee-service.jar
+      command: map-route attendee-green apps.cumuluslabs.io
+      hostname: attendee-cutcha-godson
