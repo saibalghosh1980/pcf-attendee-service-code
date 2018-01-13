@@ -26,20 +26,20 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: test
-  public: true
-  plan:
-  - get: attendee-service-source
-    trigger: true
-  - task: test
-    file: attendee-service-source/ci/tasks/test.yml
+#- name: test
+#  public: true
+#  plan:
+#  - get: attendee-service-source
+#    trigger: true
+#  - task: test
+#    file: attendee-service-source/ci/tasks/test.yml
 
 - name: deploy-green
   public: true
   plan:
   - get: attendee-service-source
     trigger: true
-    passed: [test]
+    #passed: [test]
   - task: package
     file: attendee-service-source/ci/tasks/package.yml
   - put: deploy-attendee-service
