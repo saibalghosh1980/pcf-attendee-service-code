@@ -1,10 +1,5 @@
 ---
-resource_types:
-- name: cf-cli-resource
-  type: docker-image
-  source:
-    repository: pivotalpa/cf-cli-resource
-    tag: latest
+
 resources:
 - name: attendee-service-source
   type: git
@@ -20,15 +15,6 @@ resources:
     password: {{cf-password}}
     organization: snatarajan2-PAL-JAN8    #<----- REPLACE ME
     space: dev         #<----- REPLACE ME
-    skip_cert_check: true
-- name: cli
-  type: cf-cli-resource
-  source:
-    api: api.system.cumuluslabs.io
-    username: {{cf-user}}
-    password: {{cf-password}}
-    org: snatarajan2-PAL-JAN8
-    space: dev
     skip_cert_check: true
 
 jobs:
@@ -70,10 +56,11 @@ jobs:
   - get: attendee-service-source
     trigger: true
     passed: [smoke_test_green]
-  - task: do-nothing
-    file: attendee-service-source/ci/tasks/donothing.yml
-  - put: cf-map-route
-    resource: cli
+  - task: switch-green-route
+    file: attendee-service-source/ci/tasks/update-routes.yml
     params:
-      command: map-route attendee-green apps.cumuluslabs.io
-      hostname: attendee-cutcha-godson
+          PWS_API: api.system.cumuluslabs.io
+          PWS_ORG: snatarajan2-PAL-JAN8
+          PWS_USER: {{cf-user}}
+          PWS_PWD: {{cf-password}}
+          PWS_SPACE: dev
